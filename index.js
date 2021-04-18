@@ -2,7 +2,7 @@ const express= require('express');
 const mongoose= require('mongoose');
 const config= require('./config');
 
-mongoose.connect(config.mongoURL,{useNewUrlParser:true,useUnifiedTopology:true});
+mongoose.connect(config.mongoURL,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true});
 
 const app=express();
 app.use(express.json());

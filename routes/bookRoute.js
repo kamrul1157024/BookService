@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Book = require('../models/book')
+const Book = require('../models/book');
+const checkLogin = require('../middlewares/checkLogin');
+
 const router = express.Router();
 
 
@@ -31,7 +33,7 @@ router.get('/:bookName', async (req, res) => {
 
 })
 
-router.post('/', async (req, res) => {
+router.post('/', checkLogin, async (req, res) => {
     const { bookName, author, genere } = req.body;
     try {
         const book = new Book({
@@ -52,10 +54,10 @@ router.post('/', async (req, res) => {
 
 })
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', checkLogin, async (req, res) => {
 
     try {
-        const {id}= req.params;
+        const { id } = req.params;
         const updateBook = await Book.update(
             { _id: id },
             { $set: { ...req.body } },
@@ -67,9 +69,9 @@ router.patch('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', checkLogin, async (req, res) => {
     try {
-        const {id}= req.params;
+        const { id } = req.params;
         const deletedBook = await Book.deleteOne({ _id: id });
         res.json(deletedBook);
     }
