@@ -42,9 +42,6 @@ router.post('/', checkLogin, async (req, res) => {
             author: author,
             genere: genere
         });
-
-        console.log(book);
-
         const book_from_db = await book.save();
         res.json(book_from_db);
     }

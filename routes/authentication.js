@@ -4,10 +4,11 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const fs = require('fs/promises');
 const path = require('path');
+const checkLogin = require('../middlewares/checkLogin');
 const router = express.Router();
 
 
-router.post("/register", async (req, res) => {
+router.post('/register', async (req, res) => {
     const { password } = req.body;
     const saltRounds = 10;
     try {
@@ -22,7 +23,7 @@ router.post("/register", async (req, res) => {
     }
 })
 
-router.post("/auth", async (req, res) => {
+router.post('/auth', async (req, res) => {
     try {
         const { username, password } = req.body;
         const user = await User.findOne({ username: username });
@@ -43,7 +44,17 @@ router.post("/auth", async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        res.json({msg:"Authentication Failure!"});
+        res.json({ msg: "Authentication Failure!" });
+    }
+})
+
+router.delete('/user/:username',checkLogin,async (req, res) => {
+    try {
+        await User.deleteOne({username:username});
+    }
+    catch (err) {
+        console.error(err);
+        res.json({ msg: 'user does not exist' });
     }
 })
 
