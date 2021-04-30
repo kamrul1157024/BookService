@@ -2,7 +2,7 @@
 
 - Authenticate User using JWT
 - Any One get the list of the book
-- Authenticated User and Add,Update,Remove Books
+- Authenticated User can Add,Update,Remove Books
 
 Endpoints :
 
