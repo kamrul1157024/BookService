@@ -8,7 +8,8 @@ const checkLogin=async (req,res,next)=>{
         const token= authorization.split(' ')[1];
         const secretKey= await fs.readFile(__dirname+'/../jwt/private.key');
         const decoded= jwt.verify(token,secretKey);
-        req= {...req, ...decoded}; //Attach userName and userId to the req object for farther processing
+        //Attach userName and userId to the req object for farther processing
+        req= {...req, ...decoded}; 
         next();
     }
     catch(err)
