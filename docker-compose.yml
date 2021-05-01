@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+    web:
+        build: .
+        command: sh -c "npm run app"
+        volumes: 
+            - .:/usr/app
+            - /usr/app/node_modules
+        ports: 
+            - "2000:2000"
+        depends_on:
+            - database
+    database:
+        image: mongo:latest
+        container_name: bookservice_mongo
+        ports: 
+            - "27017:27017"
+        volumes:
+            - ./data:/data/db
